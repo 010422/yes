@@ -1,7 +1,7 @@
 {
   "name": "YesPlayMusic",
   "version": "0.4.9",
-  "description": "Your app description",
+  "description": "A music player built with Electron",
   "main": "src/main.js",
   "build": {
     "appId": "com.yourname.yesplaymusic",
@@ -41,9 +41,6 @@
   },
   "scripts": {
     "build": "electron-builder"
-  },
-  "dependencies": {
-    "some-other-package": "version"
   },
   "devDependencies": {
     "electron": "^24.8.8",
