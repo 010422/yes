@@ -1,11 +1,12 @@
-const webpack = require('webpack');
 const path = require('path');
+const { VueLoaderPlugin } = require('vue-loader');
+const webpack = require('webpack');
+
 function resolve(dir) {
   return path.join(__dirname, dir);
 }
 
 module.exports = {
-  // 生产环境打包不输出 map
   productionSourceMap: false,
   devServer: {
     disableHostCheck: true,
@@ -29,9 +30,6 @@ module.exports = {
     manifestOptions: {
       background_color: '#335eea',
     },
-    // workboxOptions: {
-    //   swSrc: "dev/sw.js",
-    // },
   },
   pages: {
     index: {
@@ -56,6 +54,7 @@ module.exports = {
         symbolId: 'icon-[name]',
       })
       .end();
+
     config.module
       .rule('napi')
       .test(/\.node$/)
@@ -73,24 +72,20 @@ module.exports = {
       .options({ target: 'es2015', format: "cjs" })
       .end();
 
-    // LimitChunkCountPlugin 可以通过合并块来对块进行后期处理。用以解决 chunk 包太多的问题
     config.plugin('chunkPlugin').use(webpack.optimize.LimitChunkCountPlugin, [
       {
         maxChunks: 3,
-        minChunkSize: 10_000,
+        minChunkSize: 10000,
       },
     ]);
   },
-  // 添加插件的配置
   pluginOptions: {
-    // electron-builder的配置文件
     electronBuilder: {
       nodeIntegration: true,
       externals: ['@unblockneteasemusic/rust-napi'],
       builderOptions: {
         productName: 'YesPlayMusic',
         copyright: 'Copyright © YesPlayMusic',
-        // compression: "maximum", // 机器好的可以打开，配置压缩，开启后会让 .AppImage 格式的客户端启动缓慢
         asar: true,
         publish: [
           {
@@ -169,7 +164,6 @@ module.exports = {
           deleteAppDataOnUninstall: true,
         },
       },
-      // 主线程的配置文件
       chainWebpackMainProcess: config => {
         config.plugin('define').tap(args => {
           args[0]['IS_ELECTRON'] = true;
@@ -190,19 +184,12 @@ module.exports = {
           .options({ target: 'es2015', format: "cjs" })
           .end();
       },
-      // 渲染线程的配置文件
       chainWebpackRendererProcess: config => {
-        // 渲染线程的一些其他配置
-        // Chain webpack config for electron renderer process only
-        // The following example will set IS_ELECTRON to true in your app
         config.plugin('define').tap(args => {
           args[0]['IS_ELECTRON'] = true;
           return args;
         });
       },
-      // 主入口文件
-      // mainProcessFile: 'src/main.js',
-      // mainProcessArgs: []
     },
   },
 };
