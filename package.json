@@ -7,10 +7,9 @@
     "start": "electron .",
     "build": "electron-builder"
   },
-  "dependencies": {
-    "electron": "^24.8.8"
-  },
+  "dependencies": {},
   "devDependencies": {
+    "electron": "^24.8.8",
     "electron-builder": "^24.13.3"
   },
   "build": {
