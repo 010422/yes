@@ -19,7 +19,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '16'
+          node-version: '16'  # 设置 Node.js 版本，确保与你的项目兼容
 
       - name: Install dependencies
         run: |
@@ -27,6 +27,8 @@ jobs:
           npm install
 
       - name: Build macOS application
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}  # 设置 GH_TOKEN 环境变量
         run: |
           npm run build:macos
 
@@ -35,8 +37,3 @@ jobs:
         with:
           name: macos-build
           path: dist/mac/*
-
-      - name: Set GH_TOKEN
-        env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}  # 从 GitHub Secrets 获取 GH_TOKEN
-        run: echo "GH_TOKEN set"
