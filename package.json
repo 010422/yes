@@ -1,49 +1,31 @@
 {
   "name": "YesPlayMusic",
   "version": "0.4.9",
-  "description": "A music player built with Electron",
+  "description": "A simple music player",
   "main": "src/main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder"
+  },
+  "dependencies": {
+    "electron": "^24.8.8",
+    "some-other-package": "^1.2.3"
+  },
+  "devDependencies": {
+    "electron-builder": "^24.13.3"
+  },
   "build": {
     "appId": "com.yourname.yesplaymusic",
-    "productName": "YesPlayMusic",
-    "directories": {
-      "output": "dist"
-    },
-    "files": [
-      "dist/",
-      "src/**/*",
-      "package.json"
-    ],
     "mac": {
-      "icon": "build/icons/icon.icns",
-      "category": "public.app-category.music",
       "target": [
         "dmg"
       ]
     },
     "win": {
-      "icon": "build/icons/icon.ico",
-      "target": [
-        "nsis"
-      ]
+      "target": "nsis"
     },
     "linux": {
-      "icon": "build/icons"
-    },
-    "dmg": {
-      "title": "YesPlayMusic",
-      "icon": "build/icons/icon.icns",
-      "window": {
-        "width": 600,
-        "height": 400
-      }
+      "target": "AppImage"
     }
-  },
-  "scripts": {
-    "build": "electron-builder"
-  },
-  "devDependencies": {
-    "electron": "^24.8.8",
-    "electron-builder": "^24.13.3"
   }
 }
