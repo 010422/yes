@@ -7,10 +7,10 @@
     "build": "electron-builder"
   },
   "dependencies": {
-    "electron": "^24.0.0",
     "vue": "^3.0.0"
   },
   "devDependencies": {
+    "electron": "^24.0.0",
     "electron-builder": "^24.13.3",
     "vue-cli-service": "^5.0.0"
   },
