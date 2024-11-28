@@ -43,10 +43,10 @@
     "build": "electron-builder"
   },
   "dependencies": {
-    "some-other-package": "version"  // 保留其他依赖
+    "some-other-package": "version"
   },
   "devDependencies": {
-    "electron": "^24.8.8",  // 将 electron 移到 devDependencies
+    "electron": "^24.8.8",
     "electron-builder": "^24.13.3"
   }
 }
