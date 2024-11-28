@@ -1,4 +1,4 @@
-name: Build macOS Intel Application
+name: Build macOS Application (Intel Chip)
 
 on:
   push:
@@ -14,24 +14,24 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v2  # 检出代码
 
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '16'  # 设置 Node.js 版本，根据需要调整
+          node-version: '16'  # 设置 Node.js 版本，确保与你的项目兼容
 
       - name: Install dependencies
         run: |
-          npm install webpack@^5.27.0 webpack-cli --save-dev  # 安装 webpack 5.x 版本
+          npm install webpack@^5.96.1 webpack-cli@4.0.0 --save-dev  # 安装 webpack 和 webpack-cli
           npm install  # 安装其他依赖
 
       - name: Build macOS application
         run: |
-          npm run build:macos  # 使用自定义的构建脚本打包 macOS 版本
+          npm run build:macos  # 执行自定义的构建脚本，打包 macOS 应用
 
       - name: Upload macOS build artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v3  # 上传构建产物
         with:
           name: macos-build
-          path: dist/mac/*  # 上传构建的 macOS 文件，修改为你的实际路径
+          path: dist/mac/*  # 上传 dist/mac 文件夹中的构建产物，调整为你的实际路径
