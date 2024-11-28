@@ -21,10 +21,10 @@ jobs:
         with:
           node-version: '16'
 
-      # 安装依赖
+      # 安装依赖（使用 npm ci 代替 npm install）
       - name: Install dependencies
         run: |
-          npm install
+          npm ci
 
       # 构建应用
       - name: Build the app
