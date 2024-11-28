@@ -5,25 +5,19 @@
   "main": "src/main.js",
   "scripts": {
     "start": "electron .",
-    "build": "electron-builder",
-    "dev": "vue-cli-service serve" 
+    "build": "electron-builder"
   },
   "dependencies": {
-    "vue": "^2.6.14",
+    "vue": "^2.6.14",  
+    "vue-gtag": "^1.0.0",
     "vue-router": "^3.5.1",
     "vuex": "^3.6.2",
-    "vue-gtag": "^1.10.0",
     "nprogress": "^0.2.0"
   },
   "devDependencies": {
     "electron": "^24.8.8",
     "electron-builder": "^24.13.3",
-    "vue-cli-service": "^4.5.15",
-    "@vue/cli-plugin-babel": "^4.5.15",
-    "@vue/cli-plugin-eslint": "^4.5.15",
-    "babel-loader": "^8.2.2",
-    "@babel/core": "^7.14.6",
-    "@babel/preset-env": "^7.14.7"
+    "vue-cli-service": "^4.5.15"
   },
   "build": {
     "appId": "com.yourname.yesplaymusic",
@@ -31,17 +25,17 @@
       "target": [
         "dmg"
       ],
-      "icon": "build/icons/mac.icns"
+      "icon": "build/icons/icon.icns",
+      "category": "public.app-category.music",
+      "darkModeSupport": true
     },
     "win": {
       "target": "nsis",
-      "icon": "build/icons/win.ico"
+      "icon": "build/icons/icon.ico"
     },
     "linux": {
       "target": "AppImage",
-      "icon": "build/icons/linux.png"
-    },
-    "asar": true, 
-    "asarUnpack": "**/*.node"
+      "icon": "build/icons/icon.png"
+    }
   }
 }
