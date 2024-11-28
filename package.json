@@ -39,6 +39,9 @@
       }
     }
   },
+  "scripts": {
+    "build": "electron-builder"
+  },
   "dependencies": {
     "electron": "^24.8.8"
   },
