@@ -9,7 +9,6 @@ on:
 jobs:
   build:
     runs-on: macos-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -26,30 +25,11 @@ jobs:
       - name: Build the app
         run: |
           npm run build
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}  # 使用 Secrets 中的 GitHub Token
 
       - name: Upload macOS artifact
         uses: actions/upload-artifact@v3
         with:
           name: macos-app
           path: dist_electron/*.dmg
-
-  release:
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Set up GitHub CLI
-        run: |
-          curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo tee /usr/share/keyrings/github-archive-keyring.gpg > /dev/null
-          sudo apt update
-          sudo apt install gh
-
-      - name: Authenticate with GitHub using token
-        run: |
-          echo ${{ secrets.GH_TOKEN }} | gh auth login --with-token
-
-      - name: Create Release
-        run: |
-          gh release create v${{ github.run_number }} dist_electron/*.dmg --title "Release v${{ github.run_number }}" --notes "自动化构建的 Release"
