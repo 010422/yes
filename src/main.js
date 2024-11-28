@@ -1,3 +1,8 @@
+require('@babel/register')({
+  presets: ['@babel/preset-env'],
+  extensions: ['.js', '.jsx', '.es6', '.es', '.mjs']
+});
+
 import Vue from 'vue';
 import VueGtag from 'vue-gtag';
 import App from './App.vue';
@@ -22,6 +27,7 @@ window.resetApp = () => {
   });
   return '已重置应用，请刷新页面（按Ctrl/Command + R）';
 };
+
 console.log(
   '如出现问题，可尝试在本页输入 %cresetApp()%c 然后按回车重置应用。',
   'background: #eaeffd;color:#335eea;padding: 4px 6px;border-radius:3px;',
@@ -35,9 +41,11 @@ Vue.use(
   },
   router
 );
+
 Vue.config.productionTip = false;
 
 NProgress.configure({ showSpinner: false, trickleSpeed: 100 });
+
 dailyTask();
 
 new Vue({
