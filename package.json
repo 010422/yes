@@ -8,7 +8,6 @@
     "build": "electron-builder --mac --x64"
   },
   "dependencies": {
-    // 其他依赖
   },
   "devDependencies": {
     "electron": "^24.8.8",
