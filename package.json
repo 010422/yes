@@ -8,8 +8,7 @@
     "build": "electron-builder"
   },
   "dependencies": {
-    "electron": "^24.8.8",
-    "some-other-package": "^1.2.3"
+    "electron": "^24.8.8"
   },
   "devDependencies": {
     "electron-builder": "^24.13.3"
