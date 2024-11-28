@@ -1,35 +1,47 @@
 {
   "name": "YesPlayMusic",
   "version": "0.4.9",
-  "description": "YesPlayMusic: A modern desktop music player for NetEase Cloud Music.",
-  "main": "dist/electron/main.js",
-  "author": "Your Name",
-  "license": "MIT",
-  "build": {
-    "appId": "com.yourcompany.yesplaymusic",
-    "mac": {
-      "target": "dmg",  
-      "arch": ["x64"],  
-      "category": "public.app-category.music",  
-      "icon": "build/icons/icon.icns",  
-      "dmg": {
-        "background": "build/dmg-background.png",  
-        "window": {
-          "width": 600,
-          "height": 400
-        }
-      }
-    }
-  },
+  "main": "src/main/index.js",
   "scripts": {
     "start": "electron .",
-    "build": "electron-builder", 
-    "postinstall": "electron-builder install-app-deps"
-  },
-  "devDependencies": {
-    "electron": "^24.0.0",  
-    "electron-builder": "^24.0.0" 
+    "build": "electron-builder"
   },
   "dependencies": {
+    "electron": "^24.0.0",
+    "vue": "^3.0.0"
+  },
+  "devDependencies": {
+    "electron-builder": "^24.13.3",
+    "vue-cli-service": "^5.0.0"
+  },
+  "build": {
+    "appId": "com.yourcompany.yesplaymusic",
+    "productName": "YesPlayMusic",
+    "mac": {
+      "target": ["dmg"],
+      "icon": "build/icons/icon.icns",
+      "category": "public.app-category.music",
+      "compression": "maximum",
+      "defaultArch": "x64",
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false,
+      "entitlements": "build/entitlements.mac.plist",
+      "entitlementsInherit": "build/entitlements.mac.plist"
+    },
+    "dmg": {
+      "background": "build/background.png",
+      "icon": "build/icons/icon.icns",
+      "iconSize": 80,
+      "format": "ULFO",
+      "windowRect": { "x": 400, "y": 100, "width": 400, "height": 300 }
+    },
+    "win": {
+      "target": ["nsis"],
+      "icon": "build/icons/icon.ico"
+    },
+    "linux": {
+      "target": ["AppImage"],
+      "icon": "build/icons"
+    }
   }
 }
