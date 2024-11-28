@@ -5,26 +5,43 @@
   "main": "src/main.js",
   "scripts": {
     "start": "electron .",
-    "build": "electron-builder --mac --x64"
+    "build": "electron-builder",
+    "dev": "vue-cli-service serve" 
   },
   "dependencies": {
+    "vue": "^2.6.14",
+    "vue-router": "^3.5.1",
+    "vuex": "^3.6.2",
+    "vue-gtag": "^1.10.0",
+    "nprogress": "^0.2.0"
   },
   "devDependencies": {
     "electron": "^24.8.8",
-    "electron-builder": "^24.13.3"
+    "electron-builder": "^24.13.3",
+    "vue-cli-service": "^4.5.15",
+    "@vue/cli-plugin-babel": "^4.5.15",
+    "@vue/cli-plugin-eslint": "^4.5.15",
+    "babel-loader": "^8.2.2",
+    "@babel/core": "^7.14.6",
+    "@babel/preset-env": "^7.14.7"
   },
   "build": {
     "appId": "com.yourname.yesplaymusic",
     "mac": {
       "target": [
         "dmg"
-      ]
+      ],
+      "icon": "build/icons/mac.icns"
     },
     "win": {
-      "target": "nsis"
+      "target": "nsis",
+      "icon": "build/icons/win.ico"
     },
     "linux": {
-      "target": "AppImage"
-    }
+      "target": "AppImage",
+      "icon": "build/icons/linux.png"
+    },
+    "asar": true, 
+    "asarUnpack": "**/*.node"
   }
 }
