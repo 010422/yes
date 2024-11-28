@@ -48,7 +48,7 @@ jobs:
 
       - name: Authenticate with GitHub using token
         run: |
-          gh auth login --with-token <<< ${{ secrets.GH_TOKEN }}
+          echo ${{ secrets.GH_TOKEN }} | gh auth login --with-token
 
       - name: Create Release
         run: |
