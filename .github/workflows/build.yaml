@@ -1,35 +1,60 @@
-name: Build and Release
+name: Build and Release YesPlayMusic
 
 on:
   push:
     branches:
-      - main
-  workflow_dispatch:
+      - main  # 每次推送到 main 分支时触发构建
+  pull_request:
+    branches:
+      - main  # 每次拉取请求到 main 分支时触发构建
 
 jobs:
   build:
-    runs-on: macos-latest
+    runs-on: macos-latest  # 使用 macOS 运行环境
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+    - name: Checkout code
+      uses: actions/checkout@v3  # 检出代码
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '16'
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16'  # 配置 Node.js 版本
 
-      - name: Install dependencies
-        run: npm install --legacy-peer-deps
+    - name: Install dependencies
+      run: |
+        npm install # 安装依赖
 
-      - name: Build the app
-        run: |
-          npm run build -- --mac --x64
-        env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+    - name: Build and package app
+      run: |
+        npm run electron:build -- --mac --x64  # 打包 macOS 英特尔 x64 版本
 
-      - name: Upload macOS artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: macos-app
-          path: dist/*.dmg
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: YesPlayMusic-macOS-x64
+        path: dist_electron/  # 上传 dist_electron 文件夹中的打包产物
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest  # 在 Ubuntu 上创建 GitHub Release
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3  # 检出代码
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16'
+
+    - name: Install dependencies
+      run: |
+        npm install
+
+    - name: GitHub Release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: dist_electron/YesPlayMusic-*-x64.dmg  # 只发布打包的 dmg 文件
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # 使用 GitHub Token 进行发布
+
