@@ -28,7 +28,7 @@ jobs:
 
       - name: Build macOS application
         run: |
-          npm run build  # 确保这里运行的是 electron-builder 的构建命令
+          npm run build  
 
       - name: Upload macOS build artifacts
         uses: actions/upload-artifact@v3
