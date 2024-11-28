@@ -1,40 +1,44 @@
-name: Build macOS Intel Version
+name: Build and Release macOS Intel Version
 
 on:
   push:
-    branches:
-      - main  # 或者你项目的默认分支
-  pull_request:
-    branches:
-      - main
+    tags:
+      - 'v*'  # 只在版本标签推送时触发构建
+  workflow_dispatch:  # 支持手动触发工作流
 
 jobs:
   build:
-    runs-on: macos-latest  # 使用 macOS 最新版本的 GitHub Actions 环境
+    runs-on: macos-latest  # 使用 GitHub 提供的 macOS 环境
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3  # 获取仓库的最新代码
+      # 步骤 1: 检出代码
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '16'  # 你可以根据需要调整 Node.js 版本
+      # 步骤 2: 设置 Node.js 环境
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'  # 使用 Node.js 16
 
-    - name: Install dependencies
-      run: |
-        yarn install  # 安装依赖
+      # 步骤 3: 安装项目依赖
+      - name: Install dependencies
+        run: |
+          npm install  # 安装依赖
 
-    - name: Build the app
-      run: |
-        yarn build  # 构建应用，确保你已经配置了 `build` 命令
+      # 步骤 4: 构建项目
+      - name: Build app
+        run: |
+          npm run build  # 确保你在 package.json 中有一个 build 命令
 
-    - name: Package the app for macOS Intel
-      run: |
-        yarn electron:build --mac --x64  # 针对 macOS Intel 架构打包
+      # 步骤 5: 使用 electron-builder 打包 macOS 英特尔版本
+      - name: Build macOS Intel app
+        run: |
+          npx electron-builder --mac --x64 --publish never  # 打包 macOS Intel 版本，`--publish never` 避免自动发布
 
-    - name: Upload macOS Build Artifact
-      uses: actions/upload-artifact@v3
-      with:
-        name: macos-intel-build
-        path: dist/mac/*  # 这是默认的输出路径，确保它与项目的实际输出一致
+      # 步骤 6: 上传构建产物
+      - name: Upload macOS DMG
+        uses: actions/upload-artifact@v3
+        with:
+          name: YesPlayMusic-mac
+          path: dist_electron/*.dmg  # 假设构建产物存放在 dist_electron 文件夹中
