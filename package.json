@@ -8,34 +8,34 @@
     "build": "electron-builder"
   },
   "dependencies": {
-    "vue": "^2.6.14",  
-    "vue-gtag": "^1.0.0",
+    "vue": "^2.6.14",
     "vue-router": "^3.5.1",
     "vuex": "^3.6.2",
+    "vue-gtag": "^1.5.0",
     "nprogress": "^0.2.0"
   },
   "devDependencies": {
     "electron": "^24.8.8",
     "electron-builder": "^24.13.3",
-    "vue-cli-service": "^4.5.15"
+    "@vue/cli-service": "^4.5.16",
+    "vue-loader": "^15.9.8",
+    "webpack": "^4.46.0",
+    "webpack-cli": "^3.3.12",
+    "babel-loader": "^8.1.0",
+    "esbuild-loader": "^2.9.0"
   },
   "build": {
     "appId": "com.yourname.yesplaymusic",
     "mac": {
       "target": [
         "dmg"
-      ],
-      "icon": "build/icons/icon.icns",
-      "category": "public.app-category.music",
-      "darkModeSupport": true
+      ]
     },
     "win": {
-      "target": "nsis",
-      "icon": "build/icons/icon.ico"
+      "target": "nsis"
     },
     "linux": {
-      "target": "AppImage",
-      "icon": "build/icons/icon.png"
+      "target": "AppImage"
     }
   }
 }
