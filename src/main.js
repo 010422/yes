@@ -1,43 +1,51 @@
-const { app, BrowserWindow } = require('electron');
-const path = require('path');
+import Vue from 'vue';
+import VueGtag from 'vue-gtag';
+import App from './App.vue';
+import router from './router';
+import store from './store';
+import i18n from '@/locale';
+import '@/assets/icons';
+import '@/utils/filters';
+import './registerServiceWorker';
+import { dailyTask } from '@/utils/common';
+import '@/assets/css/global.scss';
+import NProgress from 'nprogress';
+import '@/assets/css/nprogress.css';
 
-let mainWindow;
-
-function createWindow() {
-  mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
-    webPreferences: {
-      nodeIntegration: false,
-      contextIsolation: true,
-      preload: path.join(__dirname, 'preload.js')
-    }
+window.resetApp = () => {
+  localStorage.clear();
+  indexedDB.deleteDatabase('yesplaymusic');
+  document.cookie.split(';').forEach(function (c) {
+    document.cookie = c
+      .replace(/^ +/, '')
+      .replace(/=.*/, '=;expires=' + new Date().toUTCString() + ';path=/');
   });
+  return '已重置应用，请刷新页面（按Ctrl/Command + R）';
+};
 
-  if (process.env.NODE_ENV === 'development') {
-    mainWindow.loadURL('http://localhost:8080');
-    mainWindow.webContents.openDevTools();
-  } else {
-    mainWindow.loadFile(path.join(__dirname, 'dist/index.html'));
-  }
+console.log(
+  '如出现问题，可尝试在本页输入 %cresetApp()%c 然后按回车重置应用。',
+  'background: #eaeffd;color:#335eea;padding: 4px 6px;border-radius:3px;',
+  'background:unset;color:unset;'
+);
 
-  mainWindow.on('closed', () => {
-    mainWindow = null;
-  });
-}
+Vue.use(
+  VueGtag,
+  {
+    config: { id: 'G-KMJJCFZDKF' },
+  },
+  router
+);
 
-app.whenReady().then(() => {
-  createWindow();
+Vue.config.productionTip = false;
 
-  app.on('activate', () => {
-    if (BrowserWindow.getAllWindows().length === 0) {
-      createWindow();
-    }
-  });
-});
+NProgress.configure({ showSpinner: false, trickleSpeed: 100 });
 
-app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
-    app.quit();
-  }
-});
+dailyTask();
+
+new Vue({
+  i18n,
+  store,
+  router,
+  render: h => h(App),
+}).$mount('#app');
