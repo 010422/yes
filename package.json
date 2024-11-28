@@ -30,7 +30,8 @@
     "mac": {
       "target": [
         "dmg"
-      ]
+      ],
+      "arch": "x64"
     },
     "win": {
       "target": "nsis"
