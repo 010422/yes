@@ -7,11 +7,11 @@
     "start": "electron .",
     "build": "electron-builder"
   },
-  "dependencies": {
+  "dependencies": {},
+  "devDependencies": {
     "electron": "^24.8.8",
     "electron-builder": "^24.13.3"
   },
-  "devDependencies": {},
   "build": {
     "appId": "com.yourapp.id",
     "productName": "YesPlayMusic",
