@@ -1,13 +1,17 @@
-name: CI
+name: Build macOS Application
 
 on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest  # 使用 macOS 最新版本的虚拟环境
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -15,12 +19,22 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '14'
+          node-version: '16'  # 你可以根据需要指定 Node.js 的版本
 
       - name: Install dependencies
         run: |
-          npm install webpack@^5.27.0 webpack-cli --save-dev
           npm install
 
-      - name: Run tests
-        run: npm test
+      - name: Install Electron Builder
+        run: |
+          npm install electron-builder --save-dev
+
+      - name: Build macOS Application
+        run: |
+          npm run build:macos  # 这里假设你有一个构建脚本，负责打包 macOS 应用
+
+      - name: Upload macOS build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: macos-build
+          path: dist/mac/*  # 你的 macOS 打包文件所在的路径，视项目而定
