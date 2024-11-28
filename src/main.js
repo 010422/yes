@@ -1,17 +1,19 @@
-import Vue from 'vue';
-import VueGtag from 'vue-gtag';
-import App from './App.vue';
-import router from './router';
-import store from './store';
-import i18n from '@/locale';
-import '@/assets/icons';
-import '@/utils/filters';
-import './registerServiceWorker';
-import { dailyTask } from '@/utils/common';
-import '@/assets/css/global.scss';
-import NProgress from 'nprogress';
-import '@/assets/css/nprogress.css';
+// 替换 import 为 require
+const Vue = require('vue');
+const VueGtag = require('vue-gtag');
+const App = require('./App.vue').default; // 如果使用 Vue 组件，记得加 .default
+const router = require('./router');
+const store = require('./store');
+const i18n = require('@/locale');
+require('@/assets/icons');
+require('@/utils/filters');
+require('./registerServiceWorker');
+const { dailyTask } = require('@/utils/common');
+require('@/assets/css/global.scss');
+const NProgress = require('nprogress');
+require('@/assets/css/nprogress.css');
 
+// 重置应用的函数
 window.resetApp = () => {
   localStorage.clear();
   indexedDB.deleteDatabase('yesplaymusic');
@@ -29,6 +31,7 @@ console.log(
   'background:unset;color:unset;'
 );
 
+// 使用 VueGtag 插件
 Vue.use(
   VueGtag,
   {
@@ -39,10 +42,13 @@ Vue.use(
 
 Vue.config.productionTip = false;
 
+// 配置 NProgress
 NProgress.configure({ showSpinner: false, trickleSpeed: 100 });
 
+// 执行每日任务
 dailyTask();
 
+// 创建 Vue 实例
 new Vue({
   i18n,
   store,
