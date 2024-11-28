@@ -9,6 +9,7 @@ on:
 jobs:
   build:
     runs-on: macos-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -31,3 +32,22 @@ jobs:
         with:
           name: macos-app
           path: dist_electron/*.dmg
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up GitHub CLI
+        uses: cli/cli-action@v2
+
+      - name: Create Release
+        run: |
+          gh auth login --with-token <<< ${{ secrets.GH_TOKEN }}
+          gh release create v${{ github.run_number }} dist_electron/*.dmg --title "Release v${{ github.run_number }}" --notes "自动化构建的 Release"
+
+      - name: Upload Release Asset
+        run: |
+          gh release upload v${{ github.run_number }} dist_electron/*.dmg --clobber
