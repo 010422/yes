@@ -1,0 +1,44 @@
+const path = require('path');
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
+
+module.exports = {
+  entry: './src/main.js',  // 渲染进程的入口文件
+  output: {
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'bundle.js',
+  },
+  module: {
+    rules: [
+      {
+        test: /\.vue$/,
+        loader: 'vue-loader',
+      },
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env'],
+          },
+        },
+      },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader'],
+      },
+      {
+        test: /\.(scss|sass)$/,
+        use: ['style-loader', 'css-loader', 'sass-loader'],
+      },
+    ],
+  },
+  resolve: {
+    alias: {
+      vue$: 'vue/dist/vue.esm.js',  // 配置 Vue 版本
+    },
+  },
+  plugins: [new VueLoaderPlugin()],
+  target: 'electron-renderer',  // 设置 Webpack 构建的目标为 Electron 渲染进程
+  devtool: 'source-map',  // 方便调试
+};
