@@ -1,7 +1,7 @@
 {
   "name": "YesPlayMusic",
   "version": "0.4.9",
-  "main": "src/index.js",
+  "main": "src/main.js",
   "scripts": {
     "start": "electron .",
     "build": "electron-builder"
