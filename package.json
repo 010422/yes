@@ -32,6 +32,7 @@
         "dmg"
       ],
       "defaultArch": "x64"
+      "arch": "x64"
     },
     "win": {
       "target": "nsis"
