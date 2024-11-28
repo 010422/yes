@@ -33,7 +33,20 @@
       "icon": "build/icons/icon.icns",
       "iconSize": 80,
       "format": "ULFO",
-      "windowRect": { "x": 400, "y": 100, "width": 400, "height": 300 }
+      "contents": [
+        {
+          "x": 130,
+          "y": 150,
+          "type": "file",
+          "path": "dist_electron/YesPlayMusic.app"
+        },
+        {
+          "x": 410,
+          "y": 150,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
     },
     "win": {
       "target": ["nsis"],
