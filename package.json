@@ -4,9 +4,10 @@
   "description": "A simple music player",
   "main": "src/main.js",
   "scripts": {
-    "start": "electron .",
-    "build": "electron-builder"
-  },
+  "start": "electron .",
+  "build": "electron-builder",  // 这个命令会使用默认配置打包所有平台
+  "build:macos": "electron-builder --mac --x64"  // 只打包 macOS x64 版本
+},
   "dependencies": {
     "vue": "^2.6.14",
     "vue-router": "^3.5.1",
