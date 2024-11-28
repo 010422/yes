@@ -19,7 +19,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '16'  # 设置 Node.js 版本，确保与你的项目兼容
+          node-version: '16'  # 根据你的项目需要选择合适的 Node.js 版本
 
       - name: Install dependencies
         run: |
@@ -27,13 +27,16 @@ jobs:
           npm install
 
       - name: Build macOS application
-        env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}  # 设置 GH_TOKEN 环境变量
         run: |
-          npm run build:macos
+          npm run build  # 确保这里运行的是 electron-builder 的构建命令
 
       - name: Upload macOS build artifacts
         uses: actions/upload-artifact@v3
         with:
           name: macos-build
-          path: dist/mac/*
+          path: dist/mac/*  # 上传 dist/mac 下的构建产物
+
+      - name: Set GH_TOKEN
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}  # 如果需要发布到 GitHub Release，使用 GH_TOKEN
+        run: echo "GH_TOKEN set"
