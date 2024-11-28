@@ -9,6 +9,7 @@ on:
 jobs:
   build:
     runs-on: macos-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -22,9 +23,9 @@ jobs:
         run: |
           npm install
 
-      - name: Build the app for x64
+      - name: Build the app for macOS x64
         run: |
-          npm run build -- --mac --arch x64 
+          npm run build -- --mac --arch=x64  
 
       - name: Upload macOS artifact
         uses: actions/upload-artifact@v3
