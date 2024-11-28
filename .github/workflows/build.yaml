@@ -25,17 +25,17 @@ jobs:
 
       - name: Build the app for macOS x64
         run: |
-          npm run build -- --mac --arch=x64  
+          npm run build -- --mac --x64
 
       - name: Upload macOS artifact
         uses: actions/upload-artifact@v3
         with:
           name: macos-app
-          path: dist/mac-x64/*.dmg  
+          path: dist/mac-x64/*.dmg
 
       - name: Release to GitHub
         uses: softprops/action-gh-release@v1
         with:
           files: dist/mac-x64/*.dmg
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}  
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
