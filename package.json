@@ -1,38 +1,48 @@
 {
   "name": "YesPlayMusic",
   "version": "0.4.9",
-  "description": "Your description here",
+  "description": "Your app description",
   "main": "src/main.js",
-  "scripts": {
-    "start": "electron .",
-    "build": "electron-builder"
-  },
-  "dependencies": {},
-  "devDependencies": {
-    "electron": "^24.8.8",
-    "electron-builder": "^24.13.3"
-  },
   "build": {
-    "appId": "com.yourapp.id",
+    "appId": "com.yourname.yesplaymusic",
     "productName": "YesPlayMusic",
+    "directories": {
+      "output": "dist"
+    },
     "files": [
-      "dist/**/*",
-      "build/icons/**/*",
-      "src/**/*"
+      "dist/",
+      "src/**/*",
+      "package.json"
     ],
     "mac": {
+      "icon": "build/icons/icon.icns",
+      "category": "public.app-category.music",
       "target": [
         "dmg"
-      ],
+      ]
+    },
+    "win": {
+      "icon": "build/icons/icon.ico",
+      "target": [
+        "nsis"
+      ]
+    },
+    "linux": {
+      "icon": "build/icons"
+    },
+    "dmg": {
+      "title": "YesPlayMusic",
       "icon": "build/icons/icon.icns",
-      "dmg": {
-        "icon": "build/icons/icon.icns",
-        "iconSize": 100,
-        "window": {
-          "width": 500,
-          "height": 350
-        }
+      "window": {
+        "width": 600,
+        "height": 400
       }
     }
+  },
+  "dependencies": {
+    "electron": "^24.8.8"
+  },
+  "devDependencies": {
+    "electron-builder": "^24.13.3"
   }
 }
